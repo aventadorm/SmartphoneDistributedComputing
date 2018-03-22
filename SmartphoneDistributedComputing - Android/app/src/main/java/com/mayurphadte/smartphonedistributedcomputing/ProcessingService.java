@@ -18,27 +18,55 @@ public class ProcessingService extends IntentService {
     }
     @Override
     protected void onHandleIntent(Intent intent){
-        String string_to_be_converted_to_MD5 = "REPLACE_WITH YOUR_OWN_STRING";
-        String MD5_Hash_String = md5(string_to_be_converted_to_MD5);
-        Log.d("md5:", MD5_Hash_String);
-        Log.d("md5:", "Hi");
-    }
-    public String md5(String s) {
-        try {
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes());
-            byte messageDigest[] = digest.digest();
+        String string_to_be_converted_to_MD5 = "555555";
+        //Log.d("md5:", MD5_Hash_String);
+        //Log.d("md5:", "Hi");
+        //Hello
+        Log.d();
 
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
 
-            return hexString.toString();
-        }catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        //Log.d("Hi", String.valueOf('a'+'a'));
+        Log.d("Hi", "49f68a5c8493ec2c0bf489821c21fc3b");
+        long startTime = System.currentTimeMillis();
+        for(char alphabet1 = 'a'; alphabet1 <= 'z'; alphabet1 ++){
+            for(char alphabet2 = 'a'; alphabet2 <= 'z'; alphabet2 ++){
+                Log.d("..", MD5(String.valueOf(alphabet1)+String.valueOf(alphabet2)));
+                if(MD5(String.valueOf(alphabet1)+String.valueOf(alphabet2)).equals("49f68a5c8493ec2c0bf489821c21fc3b")){
+                    Log.d("Found at",String.valueOf(alphabet1)+String.valueOf(alphabet2));
+                    break;
+                }
+            }
+
+
         }
-        return "";
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+        Log.d("Time: ",String.valueOf(elapsedTime));
     }
+    public String MD5(String md5) {
+
+        try {
+
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+
+            byte[] array = md.digest(md5.getBytes());
+
+            StringBuffer sb = new StringBuffer();
+
+            for (int i = 0; i < array.length; ++i) {
+
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+
+            }
+
+            return sb.toString();
+
+        } catch (java.security.NoSuchAlgorithmException e) {
+
+        }
+
+        return null;
+
+    }
+
 }
